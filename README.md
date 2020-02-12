@@ -7,7 +7,7 @@ Supported files:
 
 Available operations:
 - Filtering
-- Average
+- Averaging
 - Energy
 - Power
 - Peak-To-Peak
