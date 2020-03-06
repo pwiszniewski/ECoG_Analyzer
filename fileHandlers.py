@@ -56,14 +56,15 @@ class OpenFileDialog(QDialog):
             data = [fileData[key] for key in fileData if type(fileData[key]) == np.ndarray][0]
             if np.shape(data)[0] > np.shape(data)[1]:
                 data = data.transpose()
-            print('To byl mat')
         elif fileType == 'edf':
-            print('To bedzie edf')
             f = pyedflib.EdfReader(filePath)
             n = f.signals_in_file
             chNames = f.getSignalLabels()
             data = np.zeros((n, f.getNSamples()[0]))
             for i in np.arange(n):
-                data[i, :] = f.readSignal(i)
+                try:
+                    data[i, :] = f.readSignal(i)
+                except Exception as e:
+                    print(chNames[i], ' skipped', e)
             print(np.shape(data))
         return filePath, data, chNames
